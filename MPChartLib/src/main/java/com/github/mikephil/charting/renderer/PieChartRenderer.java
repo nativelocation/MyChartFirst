@@ -759,11 +759,11 @@ public class PieChartRenderer extends DataRenderer {
                         mCenterTextPaint,
                         (int) Math.max(Math.ceil(width), 1.f),
                         Layout.Alignment.ALIGN_CENTER, 1.f, 0.f, false);
-                mCenterTextFirstLayout = new StaticLayout(centerTextFirst, 0, centerText.length(),
+                mCenterTextFirstLayout = new StaticLayout(centerTextFirst, 0, centerTextFirst.length(),
                         mCenterTextPaint,
                         (int) Math.max(Math.ceil(width), 1.f),
                         Layout.Alignment.ALIGN_CENTER, 1.f, 0.f, false);
-                mCenterTextSecondLayout = new StaticLayout(centerTextSecond, 0, centerText.length(),
+                mCenterTextSecondLayout = new StaticLayout(centerTextSecond, 0, centerTextSecond.length(),
                         mCenterTextFirstPaint,
                         (int) Math.max(Math.ceil(width), 1.f),
                         Layout.Alignment.ALIGN_CENTER, 1.f, 0.f, false);
@@ -782,11 +782,11 @@ public class PieChartRenderer extends DataRenderer {
 
             c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() - layoutHeight) / 2.f);
             mCenterTextLayout.draw(c);
-            c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() - 3.f * layoutHeight) / 2.f);
-            mCenterTextFirstLayout.draw(c);
-            c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() + layoutHeight) / 2.f);
-            mCenterTextSecondLayout.draw(c);
-            c.restore();
+            // c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() - 3.f * layoutHeight) / 2.f);
+            // mCenterTextFirstLayout.draw(c);
+            // c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() + layoutHeight) / 2.f);
+            // mCenterTextSecondLayout.draw(c);
+            // c.restore();
 
             MPPointF.recycleInstance(center);
             MPPointF.recycleInstance(offset);
