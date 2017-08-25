@@ -51,13 +51,15 @@ public class PieChartRenderer extends DataRenderer {
      * chart
      */
     private TextPaint mCenterTextPaint;
-
+    private TextPaint mCenterTextFirstPaint;
     /**
      * paint object used for drwing the slice-text
      */
     private Paint mEntryLabelsPaint;
 
     private StaticLayout mCenterTextLayout;
+    private StaticLayout mCenterTextFirstLayout;
+    private StaticLayout mCenterTextSecondLayout;
     private CharSequence mCenterTextLastValue;
     private RectF mCenterTextLastBounds = new RectF();
     private RectF[] mRectBuffer = {new RectF(), new RectF(), new RectF()};
@@ -89,7 +91,11 @@ public class PieChartRenderer extends DataRenderer {
 
         mCenterTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         mCenterTextPaint.setColor(Color.BLACK);
-        mCenterTextPaint.setTextSize(Utils.convertDpToPixel(12f));
+        mCenterTextPaint.setTextSize(Utils.convertDpToPixel(24f));
+    
+        mCenterTextFirstPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        mCenterTextFirstPaint.setColor(Color.GRAY);
+        mCenterTextFirstPaint.setTextSize(Utils.convertDpToPixel(24f));
 
         mValuePaint.setTextSize(Utils.convertDpToPixel(13f));
         mValuePaint.setColor(Color.WHITE);
@@ -709,6 +715,8 @@ public class PieChartRenderer extends DataRenderer {
     protected void drawCenterText(Canvas c) {
 
         CharSequence centerText = mChart.getCenterText();
+        CharSequence centerTextFirst = mChart.getCenterTextFirst();
+        CharSequence centerTextSecond = mChart.getCenterTextSecond();
 
         if (mChart.isDrawCenterTextEnabled() && centerText != null) {
 
@@ -751,6 +759,14 @@ public class PieChartRenderer extends DataRenderer {
                         mCenterTextPaint,
                         (int) Math.max(Math.ceil(width), 1.f),
                         Layout.Alignment.ALIGN_CENTER, 1.f, 0.f, false);
+                mCenterTextFirstLayout = new StaticLayout(centerTextFirst, 0, centerText.length(),
+                        mCenterTextPaint,
+                        (int) Math.max(Math.ceil(width), 1.f),
+                        Layout.Alignment.ALIGN_CENTER, 1.f, 0.f, false);
+                mCenterTextSecondLayout = new StaticLayout(centerTextSecond, 0, centerText.length(),
+                        mCenterTextFirstPaint,
+                        (int) Math.max(Math.ceil(width), 1.f),
+                        Layout.Alignment.ALIGN_CENTER, 1.f, 0.f, false);
             }
 
             //float layoutWidth = Utils.getStaticLayoutMaxWidth(mCenterTextLayout);
@@ -766,7 +782,10 @@ public class PieChartRenderer extends DataRenderer {
 
             c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() - layoutHeight) / 2.f);
             mCenterTextLayout.draw(c);
-
+            c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() - 3.f * layoutHeight) / 2.f);
+            mCenterTextFirstLayout.draw(c);
+            c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() + layoutHeight) / 2.f);
+            mCenterTextSecondLayout.draw(c);
             c.restore();
 
             MPPointF.recycleInstance(center);
