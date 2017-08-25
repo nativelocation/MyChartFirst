@@ -42,6 +42,7 @@ public class PieChartRenderer extends DataRenderer {
      * circle
      */
     protected Paint mHolePaint;
+    protected Paint mMiddleOffsetPaint;
     protected Paint mTransparentCirclePaint;
     protected Paint mValueLinePaint;
 
@@ -77,6 +78,10 @@ public class PieChartRenderer extends DataRenderer {
         mHolePaint.setColor(Color.WHITE);
         mHolePaint.setStyle(Style.FILL);
 
+        mMiddleOffsetPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mMiddleOffsetPaint.setColor(Color.GRAY);
+        mMiddleOffsetPaint.setStyle(Style.FILL);
+        
         mTransparentCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTransparentCirclePaint.setColor(Color.WHITE);
         mTransparentCirclePaint.setStyle(Style.FILL);
@@ -101,6 +106,10 @@ public class PieChartRenderer extends DataRenderer {
 
     public Paint getPaintHole() {
         return mHolePaint;
+    }
+
+    public Paint getPaintMiddleOffset() {
+        return mMiddleOffsetPaint;
     }
 
     public Paint getPaintTransparentCircle() {
@@ -652,6 +661,9 @@ public class PieChartRenderer extends DataRenderer {
 
             float radius = mChart.getRadius();
             float holeRadius = radius * (mChart.getHoleRadius() / 100);
+            float middleRadius = radius * (mChart.getMiddleRadius() / 100);
+            float middleRadiusOffset = radius * (mChart.getMiddleRadius() / 100 + mChart.getMiddleOffset() / 100);
+            
             MPPointF center = mChart.getCenterCircleBox();
 
             if (Color.alpha(mHolePaint.getColor()) > 0) {
@@ -659,6 +671,14 @@ public class PieChartRenderer extends DataRenderer {
                 mBitmapCanvas.drawCircle(
                         center.x, center.y,
                         holeRadius, mHolePaint);
+            }
+            if (Color.alpha(mMiddleOffsetPaint.getColor()) > 0) {
+                mBitmapCanvas.drawCircle(
+                        center.x, center.y,
+                        middleRadiusOffset, mMiddleOffsetPaint);
+                mBitmapCanvas.drawCircle(
+                        center.x, center.y,
+                        middleRadius, mHolePaint);
             }
 
             // only draw the circle if it can be seen (not covered by the hole)
