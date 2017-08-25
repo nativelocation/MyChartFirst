@@ -42,6 +42,7 @@ public class PieChartRenderer extends DataRenderer {
      * circle
      */
     protected Paint mHolePaint;
+    protected Paint mMiddleOffsetPaint;
     protected Paint mTransparentCirclePaint;
     protected Paint mValueLinePaint;
 
@@ -77,6 +78,10 @@ public class PieChartRenderer extends DataRenderer {
         mHolePaint.setColor(Color.WHITE);
         mHolePaint.setStyle(Style.FILL);
 
+        mMiddleOffsetPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mMiddleOffsetPaint.setColor(Color.GRAY);
+        mMiddleOffsetPaint.setStyle(Style.FILL);
+        
         mTransparentCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTransparentCirclePaint.setColor(Color.WHITE);
         mTransparentCirclePaint.setStyle(Style.FILL);
@@ -101,6 +106,10 @@ public class PieChartRenderer extends DataRenderer {
 
     public Paint getPaintHole() {
         return mHolePaint;
+    }
+
+    public Paint getPaintMiddleOffset() {
+        return mMiddleOffsetPaint;
     }
 
     public Paint getPaintTransparentCircle() {
@@ -662,11 +671,11 @@ public class PieChartRenderer extends DataRenderer {
                 mBitmapCanvas.drawCircle(
                         center.x, center.y,
                         holeRadius, mHolePaint);
-                mHolePaint.setColor(Color.BLACK);
+            }
+            if (Color.alpha(mMiddleOffsetPaint.getColor()) > 0) {
                 mBitmapCanvas.drawCircle(
                         center.x, center.y,
-                        middleRadiusOffset, mHolePaint);
-                mHolePaint.setColor(Color.WHITE);
+                        middleRadiusOffset, mMiddleOffsetPaint);
                 mBitmapCanvas.drawCircle(
                         center.x, center.y,
                         middleRadius, mHolePaint);
