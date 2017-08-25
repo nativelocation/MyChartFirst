@@ -671,8 +671,6 @@ public class PieChartRenderer extends DataRenderer {
                 mBitmapCanvas.drawCircle(
                         center.x, center.y,
                         holeRadius, mHolePaint);
-            }
-            if (Color.alpha(mMiddleOffsetPaint.getColor()) > 0) {
                 mBitmapCanvas.drawCircle(
                         center.x, center.y,
                         middleRadiusOffset, mMiddleOffsetPaint);
