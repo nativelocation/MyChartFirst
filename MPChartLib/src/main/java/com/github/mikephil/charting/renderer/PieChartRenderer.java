@@ -782,12 +782,16 @@ public class PieChartRenderer extends DataRenderer {
 
             c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() - layoutHeight) / 2.f);
             mCenterTextLayout.draw(c);
-            // c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() - 3.f * layoutHeight) / 2.f);
-            // mCenterTextFirstLayout.draw(c);
-            // c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() + layoutHeight) / 2.f);
-            // mCenterTextSecondLayout.draw(c);
-            // c.restore();
-
+            c.restore();
+            c.save();
+            c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() - 3.f * layoutHeight) / 2.f);
+            mCenterTextFirstLayout.draw(c);
+            c.restore();
+            c.save();
+            c.translate(boundingRect.left, boundingRect.top + (boundingRect.height() + layoutHeight) / 2.f);
+            mCenterTextSecondLayout.draw(c);
+            c.restore();
+            
             MPPointF.recycleInstance(center);
             MPPointF.recycleInstance(offset);
         }
